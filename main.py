@@ -17,8 +17,6 @@ def menu():
 
 lightgreen = (0,255,100)
 
-win = display.set_mode((1000,500))
-
 class PlatForm():
     def __init__(self,x,y,width,height,speed,pic_name):
         self.pic = image.load(pic_name)
@@ -103,9 +101,9 @@ ball = Mychik(100,100,40,40,10,'beach-ball-icon.png','up','right' )
 
 lightgreen = (0,255,100)
 
-win = display.set_mode((1000,500))
-w = 1000
-h = 500
+win = display.set_mode((W,H),flags=FULLSCREEN)
+w = W
+h = H
 
 timer = time.Clock()
     
