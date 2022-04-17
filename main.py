@@ -65,13 +65,13 @@ class Mychik():
 
         self.reset()    
         
-platform = PlatForm(x=100,y=350,width=50,height=150,speed=1,pic_name="platform.png")
+platform = PlatForm(x=100,y=350,width=50,height=150,speed=10,pic_name="platform.png")
 platform.ymove = "-"
 
-platform1 = PlatForm(x=800,y=350,width=50,height=150,speed=1,pic_name="platform.png")
+platform1 = PlatForm(x=800,y=350,width=50,height=150,speed=10,pic_name="platform.png")
 platform1.ymove = "-"
 
-ball = Mychik(100,100,40,40,1,'beach-ball-icon.png','up','right' )
+ball = Mychik(100,100,40,40,10,'beach-ball-icon.png','up','right' )
 
 lightgreen = (0,255,100)
 
@@ -79,6 +79,7 @@ win = display.set_mode((1000,500))
 w = 1000
 h = 500
 
+timer = time.Clock()
     
 while True:
 
@@ -107,4 +108,6 @@ while True:
     ball.update()
     platform.update()
     platform1.update()
+
+    timer.tick(60)
     display.update()
