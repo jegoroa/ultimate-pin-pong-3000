@@ -1,8 +1,12 @@
 from pygame import *
 from win32api import GetSystemMetrics
 
+bg = image.load("background.png")
+
 W = GetSystemMetrics(0)
 H = GetSystemMetrics(1)
+
+coficent = (W*H)/(2560*1440)
 
 win = display.set_mode((W,H),flags=FULLSCREEN)
 
@@ -10,29 +14,31 @@ font.init()
 
 menu_font = font.SysFont("Impact", 42)
 
-
-
 def set_640():
-    global W,H
+    global W,H, bg
     W, H = 640, 480
+    bg = transform.scale(bg , (W, H))
     win = display.set_mode((W,H),flags=FULLSCREEN)
 
 def set_1366():
-    global W,H
+    global W,H, bg
     W = 1366
-    H = 768   
+    H = 768
+    bg = transform.scale(bg , (W, H))
     win = display.set_mode((W,H),flags=FULLSCREEN)
     
 def set_1920():
-    global W,H
+    global W,H, bg
     W = 1920
     H = 1080
+    bg = transform.scale(bg , (W, H))
     win = display.set_mode((W,H),flags=FULLSCREEN)
 
 def set_2560():
-    global W,H
+    global W,H, bg
     W = 2560
     H = 1440
+    bg = transform.scale(bg , (W, H))
     win = display.set_mode((W,H),flags=FULLSCREEN)
 
 
@@ -43,19 +49,21 @@ class Menu():
         self.rect = Rect(x,y,500,600)
 
     def update(self):
-        draw.rect(win,(77,77,77),self.rect)
         win.blit(self.image, self.rect)
 
 
 
 class Button():
-    def __init__(self,x,y, filename,func, mode = None):
-        self.rect = Rect(x,y,200,100)
+    def __init__(self,x,y, text, func, mode = None):
+        self.x = x
+        self.y = y
+        self.rect = Rect(self.x,self.y,200,100)
         self.func = func
         self.visible = True
         self.mode = mode
-        self.filename = filename
-        self.image = image.load(filename)
+        self.text_pic = menu_font.render(text,True,(0,0,0))
+        self.image = image.load("button.png")
+        self.image = transform.scale(self.image, (200,100))
     
     def check_click(self,pos):
         if self.rect.collidepoint(pos) and self.visible is True: 
@@ -66,16 +74,17 @@ class Button():
 
     def update(self):
         if self.visible:
-            draw.rect(win,(50,50,50),self.rect)
             win.blit(self.image, self.rect)
+            win.blit(self.text_pic, (self.x, self.y))
         
 
 
 class ListButton():
-    def __init__(self,x,y,filename,buttons, visible = False):
+    def __init__(self,x,y,text,buttons, visible = False):
         self.rect = Rect(x,y,200,100)
-        self.filename = filename
-        self.image = image.load(filename)
+        self.text_pic = menu_font.render(text,True,(0,0,0))
+        self.image = image.load("button.png")
+        self.image = transform.scale(self.image, (200,100))
         self.buttons = buttons
         self.visible = visible
         for btn in buttons:
@@ -91,8 +100,8 @@ class ListButton():
                 self.visible = False
 
     def update(self):
-        draw.rect(win,(50,50,50),self.rect)
         win.blit(self.image, self.rect)
+        win.blit(self.text_pic, self.rect)
 
     def show_buttons(self):
         for btn in self.buttons:

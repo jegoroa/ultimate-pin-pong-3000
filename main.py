@@ -1,5 +1,7 @@
 from pygame import *
-from menu import *
+from pong import *
+
+bg = transform.scale(bg , (W, H))
 
 mode = "start_screen"
 
@@ -17,27 +19,32 @@ def menu():
 
 lightgreen = (0,255,100)
 
+#class
+
 class PlatForm():
     def __init__(self,x,y,width,height,speed,pic_name):
         self.pic = image.load(pic_name)
+        self.pic = transform.scale(self.pic, (width,height))
         self.rect = Rect(x,y,width,height)
         self.speed = speed
 
     def update(self):
         if self.ymove == 'down':
             self.rect.y += self.speed
-            if self.rect.y > 400:
-                self.rect.y = 400
+            if self.rect.y > H-100:
+                self.rect.y = H-100
         else:
             self.rect.y -= self.speed
             if self.rect.y < 0:
                 self.rect.y = 0
-                
+
         self.reset()
 
 
     def reset(self):
         win.blit(self.pic,( self.rect.x,self.rect.y))
+
+
 
 class Mychik():
     def __init__(self,x,y,w,h,speed,filename,vface,hface):
@@ -64,7 +71,7 @@ class Mychik():
             self.rect.x -= self.speed
             if self.rect.x < 0:
                 self.hface = "right"
-        
+
         if self.vface == "up":
             self.rect.y -= self.speed
             if self.rect.y < 0:
@@ -75,33 +82,36 @@ class Mychik():
             if self.rect.y > h:
                 self.vface = "up"
 
-        self.reset()    
-       
+        self.reset()
+
+
 #start_screen
-start_menu = Menu(W/2-100,300)
-start_btn = Button(W/2-100,400,"Start", start)
-settings_btn = Button(W/2-100,500, "Settings", setting)
-exit_btn = Button(W/2-100,600,"Exit", exit)
+start_menu = Menu(W/2-250,H/2 - 100, "layer.png")
+start_btn = Button(W/2-100,H/2,"        start", start)
+settings_btn = Button(W/2-100,H/2 + 100 , "    settings", setting)
+exit_btn = Button(W/2-100,H/2 + 300,"         exit", exit)
 
 #setting
-btn1920 = Button(W/2-100,400,"1920x1080",set_1920)
-btn1366 = Button(W/2-100,500,"1366x768",set_1366)
-btn640 = Button(W/2-100,600,"640x480", set_640)
+btn2560 = Button(W/2-100,H/2 ," 2560x1440",set_2560)
+btn1920 = Button(W/2-100,H/2 + 100," 1920x1080",set_1920)
+btn1366 = Button(W/2-100,H/2 + 200,"  1366x768",set_1366)
+btn640 = Button(W/2-100,H/2 + 300,"   640x480", set_640)
 
-res_list = ListButton(W/2-100,300,(str(W)+"x"+str(H)),[btn640 ,btn1366, btn1920])
-back_btn = Button(W/2-100,600,"Back", menu)
-      
-platform = PlatForm(x=100,y=350,width=50,height=150,speed=10,pic_name="platform.png")
+res_list = ListButton(W/2-100,H/2 - 100,"      resize",[btn640, btn1366, btn1920, btn2560])
+back_btn = Button(W/2-100,H/2 + 300,"        back", menu)
+
+#game
+platform = PlatForm(x=100,y=H/2,width=75*coficent,height=225*coficent,speed=10,pic_name="platform.png")
 platform.ymove = "-"
 
-platform1 = PlatForm(x=800,y=350,width=50,height=150,speed=10,pic_name="platform.png")
+platform1 = PlatForm(x=(W-100),y=H/2,width=75*coficent,height=225*coficent,speed=10,pic_name="platform.png")
 platform1.ymove = "-"
 
-ball = Mychik(100,100,40,40,10,'beach-ball-icon.png','up','right' )
+ball = Mychik(H/2,W/2,75*coficent,75*coficent,10,'beach-ball-icon.png','up','right')
 
 lightgreen = (0,255,100)
 
-win = display.set_mode((W,H),flags=FULLSCREEN)
+
 w = W
 h = H
 
@@ -119,11 +129,15 @@ while True:
                 settings_btn.check_click(e.pos)
                 exit_btn.check_click(e.pos)
             elif mode == "setting":
-                res_list.check_click(e.pos)
-                btn640.check_click(e.pos)
-                btn1366.check_click(e.pos)
-                btn1920.check_click(e.pos)
-                back_btn.check_click(e.pos)
+                if res_list.visible == True:
+                    res_list.check_click(e.pos)
+                    btn640.check_click(e.pos)
+                    btn1366.check_click(e.pos)
+                    btn1920.check_click(e.pos)
+                    btn2560.check_click(e.pos)
+                else:
+                    res_list.check_click(e.pos)
+                    back_btn.check_click(e.pos)
         
         if e.type == KEYDOWN:
             if e.key == K_w:
@@ -139,6 +153,7 @@ while True:
                 platform1.ymove = "down"
 
     if mode == "start_screen":
+        win.blit(bg,(0,0))
         start_menu.update()
         start_btn.update()
         settings_btn.update()
@@ -146,21 +161,25 @@ while True:
 
     elif mode == "setting":
         if res_list.visible == True:
+            win.blit(bg,(0,0))
             start_menu.update()
             res_list.update()
             btn640.update()
             btn1366.update()
             btn1920.update()
+            btn2560.update()
         else:
+            win.blit(bg,(0,0))
             start_menu.update()
             res_list.update()
             btn640.update()
             btn1366.update()
             btn1920.update()
+            btn2560.update()
             back_btn.update()
     
     elif mode == "game":
-      win.fill(lightgreen)
+      win.blit(bg,(0,0))
       ball.update()
       platform.update()
       platform1.update()
