@@ -54,6 +54,8 @@ class PlatForm():
 
 class Mychik():
     def __init__(self,x,y,w,h,speed,filename,vface,hface):
+        self.w = w
+        self.h = h
         self.speed = speed
         self.filename = filename
         self.rect = Rect(x,y,w,h)
@@ -63,6 +65,10 @@ class Mychik():
         self.rect.y = y
         self.vface = vface
         self.hface = hface
+
+    def change_skin(self,new_filename):
+        self.image = image.load(new_filename)
+        self.image = transform.scale(self.image, (self.w,self.h))
 
     def reset(self):
         win.blit( self.image , (self.rect.x, self.rect.y) )
@@ -98,11 +104,16 @@ class Mychik():
 
         self.reset()
 
+def set_gold_skin():
+    ball.change_skin("gold.jpg")
 
 #start_screen
 start_menu = Menu(W/2-250,H/2 - 100, "layer.png")
 start_btn = Button(W/2-100,H/2,"        start", start)
 settings_btn = Button(W/2-100,H/2 + 100 , "    settings", setting)
+
+gold_skin_btn = Button(W/2-100,H/2 + 500 , "    gold skin", set_gold_skin)
+
 exit_btn = Button(W/2-100,H/2 + 300,"         exit", exit)
 
 #setting
@@ -121,7 +132,8 @@ platform.ymove = "-"
 platform1 = PlatForm(x=(W-100),y=H/2,width=75*coficent,height=225*coficent,speed=10,pic_name="platform.png")
 platform1.ymove = "-"
 
-ball = Mychik(H/2,W/2,75*coficent,75*coficent,10,'beach-ball-icon.png','up','right')
+ball = Mychik(H/2,W/2,75*coficent,75*coficent,10,
+'beach-ball-icon.png','up','right')
 
 lightgreen = (0,255,100)
 
@@ -141,6 +153,7 @@ while True:
             if mode == "start_screen":
                 start_btn.check_click(e.pos)
                 settings_btn.check_click(e.pos)
+                gold_skin_btn.check_click(e.pos)
                 exit_btn.check_click(e.pos)
             elif mode == "setting":
                 if res_list.visible == True:
@@ -170,6 +183,7 @@ while True:
         win.blit(bg,(0,0))
         start_menu.update()
         start_btn.update()
+        gold_skin_btn.update()
         settings_btn.update()
         exit_btn.update()
 
