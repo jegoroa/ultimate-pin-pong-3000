@@ -1,8 +1,8 @@
 from pygame import *
-from win32api import GetSystemMetrics
+#from win32api import GetSystemMetrics
 
-W = GetSystemMetrics(0)
-H = GetSystemMetrics(1)
+W = 1920
+H = 1080
 
 win = display.set_mode((W,H),flags=FULLSCREEN)
 
