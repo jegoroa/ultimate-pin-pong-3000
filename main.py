@@ -39,16 +39,23 @@ class PlatForm():
             if self.rect.y < 0:
                 self.rect.y = 0
 
-        self.reset()
+        #столкиваюсь ли я с мячом???
+        if self.rect.colliderect(ball.rect):
+            #если да
+            #то меняю у него направление движения по горизонтали
+            if ball.hface == "right": ball.hface = "left"
+            else: ball.hface = "right"
+        
+        #бонус - добавить +1 балл игроку за отбив мяча
 
+        self.reset()
 
     def reset(self):
         win.blit(self.pic,( self.rect.x,self.rect.y))
 
-
-
 class Mychik():
     def __init__(self,x,y,w,h,speed,filename,vface,hface):
+        self.height = h
         self.speed = speed
         self.filename = filename
         self.rect = Rect(x,y,w,h)
@@ -65,7 +72,7 @@ class Mychik():
     def update(self):
         if self.hface == "right":
             self.rect.x += self.speed
-            if self.rect.x > w:
+            if self.rect.x > W:
                 self.hface = "left"
 
         if self.hface == "left":
@@ -80,7 +87,7 @@ class Mychik():
 
         if self.vface == "dawn":
             self.rect.y += self.speed
-            if self.rect.y > h:
+            if self.rect.y > H-self.height:
                 self.vface = "up"
 
         self.reset()
