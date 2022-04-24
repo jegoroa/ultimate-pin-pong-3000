@@ -1,10 +1,10 @@
 from pygame import *
-from win32api import GetSystemMetrics
+#from win32api import GetSystemMetrics
 
 bg = image.load("background.png")
 
-W = GetSystemMetrics(0)
-H = GetSystemMetrics(1)
+W = 1920
+H = 1080
 
 coficent = (W*H)/(2560*1440)
 
