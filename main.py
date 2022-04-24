@@ -68,15 +68,23 @@ class Mychik():
         win.blit( self.image , (self.rect.x, self.rect.y) )
 
     def update(self):
+        global mode, loose_label
+
         if self.hface == "right":
             self.rect.x += self.speed
             if self.rect.x > w:
-                self.hface = "left"
-
+                #проигрывает игрок 2
+                mode = "end_game"
+                lose_font = font.SysFont("Impact", 100)
+                loose_label = lose_font.render("проиграл правый", True, (0,0,0))
+                
         if self.hface == "left":
             self.rect.x -= self.speed
             if self.rect.x < 0:
-                self.hface = "right"
+                #проигрывает игрок 1
+                mode = "end_game"
+                lose_font = font.SysFont("Impact", 100)
+                loose_label = lose_font.render("проиграл левый", True, (0,0,0))
 
         if self.vface == "up":
             self.rect.y -= self.speed
@@ -189,6 +197,10 @@ while True:
       ball.update()
       platform.update()
       platform1.update()
+
+    elif mode == "end_game":
+        win.blit(bg,(0,0))
+        win.blit(loose_label,(W//2,H//2))
 
     timer.tick(60)
     display.update()
