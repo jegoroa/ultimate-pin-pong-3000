@@ -1,5 +1,12 @@
 from pygame import *
 from pong import *
+from random import randint
+
+vfaces = ["up", "dawn"]
+hfaces = ["right","left"]
+
+first_player = 0
+second_player = 0
 
 bg = transform.scale(bg , (W, H))
 
@@ -83,17 +90,29 @@ class Mychik():
             
             if self.rect.x > W:
                 #проигрывает игрок 2
-                mode = "end_game"
+                self.rect.x = W/2
+                self.rect.y = H/2
+                global first_player
+                self.vface, self.hface = vfaces[randint(0,1)],hfaces[randint(0,1)]
                 lose_font = font.SysFont("Impact", 100)
                 loose_label = lose_font.render("проиграл правый", True, (0,0,0))
+                first_player +=1
+                if first_player == 5:
+                    mode = "end_game"
+                    print(first_player)
                 
         if self.hface == "left":
             self.rect.x -= self.speed
             if self.rect.x < 0:
                 #проигрывает игрок 1
-                mode = "end_game"
+                global second_player
+                self.x = H/2
+                self.y = W/2
                 lose_font = font.SysFont("Impact", 100)
                 loose_label = lose_font.render("проиграл левый", True, (0,0,0))
+                second_player+=1
+                if second_player == 5:
+                    mode = "end_game"
 
         if self.vface == "up":
             self.rect.y -= self.speed
@@ -136,7 +155,7 @@ platform1 = PlatForm(x=(W-100),y=H/2,width=int(H/20),height=int(W/11),speed=10,p
 platform1.ymove = "-"
 
 
-ball = Mychik(H/2,W/2,int(H/20),int(H/20),10,'beach-ball-icon.png','up','right')
+ball = Mychik(W/2,H/2,int(H/20),int(H/20),10,'beach-ball-icon.png',vfaces[randint(0,1)],hfaces[randint(0,1)])
 
 
 lightgreen = (0,255,100)
