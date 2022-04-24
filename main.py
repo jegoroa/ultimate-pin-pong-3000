@@ -55,6 +55,7 @@ class PlatForm():
 
 class Mychik():
     def __init__(self,x,y,w,h,speed,filename,vface,hface):
+        self.height = h
         self.speed = speed
         self.filename = filename
         self.rect = Rect(x,y,w,h)
@@ -73,7 +74,8 @@ class Mychik():
 
         if self.hface == "right":
             self.rect.x += self.speed
-            if self.rect.x > w:
+            
+            if self.rect.x > W:
                 #проигрывает игрок 2
                 mode = "end_game"
                 lose_font = font.SysFont("Impact", 100)
@@ -94,7 +96,7 @@ class Mychik():
 
         if self.vface == "dawn":
             self.rect.y += self.speed
-            if self.rect.y > h:
+            if self.rect.y > H-self.height:
                 self.vface = "up"
 
         self.reset()
