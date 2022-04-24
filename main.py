@@ -23,6 +23,7 @@ lightgreen = (0,255,100)
 
 class PlatForm():
     def __init__(self,x,y,width,height,speed,pic_name):
+        self.height = height
         self.pic = image.load(pic_name)
         self.pic = transform.scale(self.pic, (width,height))
         self.rect = Rect(x,y,width,height)
@@ -31,8 +32,8 @@ class PlatForm():
     def update(self):
         if self.ymove == 'down':
             self.rect.y += self.speed
-            if self.rect.y > H-100:
-                self.rect.y = H-100
+            if self.rect.y > H-self.height:
+                self.rect.y = H-self.height
         else:
             self.rect.y -= self.speed
             if self.rect.y < 0:
@@ -107,13 +108,13 @@ res_list = ListButton(W/2-100,H/2 - 100,"      resize",[btn640, btn1366, btn1920
 back_btn = Button(W/2-100,H/2 + 300,"        back", menu)
 
 #game
-platform = PlatForm(x=100,y=H/2,width=75*coficent,height=225*coficent,speed=10,pic_name="platform.png")
+platform = PlatForm(x=100,y=H/2,width=int(H/20),height=int(W/11),speed=10,pic_name="platform.png")
 platform.ymove = "-"
 
-platform1 = PlatForm(x=(W-100),y=H/2,width=75*coficent,height=225*coficent,speed=10,pic_name="platform.png")
+platform1 = PlatForm(x=(W-100),y=H/2,width=int(H/20),height=int(W/11),speed=10,pic_name="platform.png")
 platform1.ymove = "-"
 
-ball = Mychik(H/2,W/2,75*coficent,75*coficent,10,'beach-ball-icon.png','up','right')
+ball = Mychik(H/2,W/2,int(H/20),int(H/20),10,'beach-ball-icon.png','up','right')
 
 lightgreen = (0,255,100)
 
