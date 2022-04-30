@@ -13,6 +13,7 @@ win = display.set_mode((W,H),flags=FULLSCREEN)
 font.init()
 
 menu_font = font.SysFont("Impact", 42)
+lose_font = font.SysFont("Impact", 50)
 
 def set_640():
     global W,H, bg
@@ -61,8 +62,7 @@ class Button():
         self.func = func
         self.visible = True
         self.mode = mode
-        self.text_pic = menu_font.render(text,True,(0,0,0))
-        self.image = image.load("button.png")
+        self.image = image.load(text)
         self.image = transform.scale(self.image, (200,100))
     
     def check_click(self,pos):
@@ -75,15 +75,13 @@ class Button():
     def update(self):
         if self.visible:
             win.blit(self.image, self.rect)
-            win.blit(self.text_pic, (self.x, self.y))
-        
+
 
 
 class ListButton():
     def __init__(self,x,y,text,buttons, visible = False):
         self.rect = Rect(x,y,200,100)
-        self.text_pic = menu_font.render(text,True,(0,0,0))
-        self.image = image.load("button.png")
+        self.image = image.load(text)
         self.image = transform.scale(self.image, (200,100))
         self.buttons = buttons
         self.visible = visible
@@ -101,7 +99,6 @@ class ListButton():
 
     def update(self):
         win.blit(self.image, self.rect)
-        win.blit(self.text_pic, self.rect)
 
     def show_buttons(self):
         for btn in self.buttons:
