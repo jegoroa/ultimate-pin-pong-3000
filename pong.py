@@ -13,6 +13,7 @@ win = display.set_mode((W,H),flags=FULLSCREEN)
 font.init()
 
 menu_font = font.SysFont("Impact", 42)
+lose_font = font.SysFont("Impact", 50)
 
 def set_640():
     global W,H, bg
@@ -54,16 +55,15 @@ class Menu():
 
 
 class Button():
-    def __init__(self,x,y, text, func, mode = None):
+    def __init__(self,x,y, text, func, mode = None, w = 200):
         self.x = x
         self.y = y
-        self.rect = Rect(self.x,self.y,200,100)
+        self.rect = Rect(self.x,self.y,w,100)
         self.func = func
         self.visible = True
         self.mode = mode
-        self.text_pic = menu_font.render(text,True,(0,0,0))
-        self.image = image.load("button.png")
-        self.image = transform.scale(self.image, (200,100))
+        self.image = image.load(text)
+        self.image = transform.scale(self.image, (w,100))
     
     def check_click(self,pos):
         if self.rect.collidepoint(pos) and self.visible is True: 
@@ -75,15 +75,13 @@ class Button():
     def update(self):
         if self.visible:
             win.blit(self.image, self.rect)
-            win.blit(self.text_pic, (self.x, self.y))
-        
+
 
 
 class ListButton():
     def __init__(self,x,y,text,buttons, visible = False):
         self.rect = Rect(x,y,200,100)
-        self.text_pic = menu_font.render(text,True,(0,0,0))
-        self.image = image.load("button.png")
+        self.image = image.load(text)
         self.image = transform.scale(self.image, (200,100))
         self.buttons = buttons
         self.visible = visible
@@ -101,7 +99,6 @@ class ListButton():
 
     def update(self):
         win.blit(self.image, self.rect)
-        win.blit(self.text_pic, self.rect)
 
     def show_buttons(self):
         for btn in self.buttons:
@@ -112,4 +109,16 @@ class ListButton():
             btn.visible = False
 
 
+class Picture():
+    def __init__(self,x,y, w, h, text):
+        self.x = x
+        self.y = y
+        self.rect = Rect(self.x, self.y, w, h)
+        self.visible = True
+        self.image = image.load(text)
+        self.image = transform.scale(self.image, (w,h))
+
+    def update(self):
+        if self.visible:
+            win.blit(self.image, self.rect)
 
