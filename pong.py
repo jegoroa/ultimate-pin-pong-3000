@@ -55,15 +55,15 @@ class Menu():
 
 
 class Button():
-    def __init__(self,x,y, text, func, mode = None):
+    def __init__(self,x,y, text, func, mode = None, w = 200):
         self.x = x
         self.y = y
-        self.rect = Rect(self.x,self.y,200,100)
+        self.rect = Rect(self.x,self.y,w,100)
         self.func = func
         self.visible = True
         self.mode = mode
         self.image = image.load(text)
-        self.image = transform.scale(self.image, (200,100))
+        self.image = transform.scale(self.image, (w,100))
     
     def check_click(self,pos):
         if self.rect.collidepoint(pos) and self.visible is True: 
@@ -109,4 +109,16 @@ class ListButton():
             btn.visible = False
 
 
+class Picture():
+    def __init__(self,x,y, w, h, text):
+        self.x = x
+        self.y = y
+        self.rect = Rect(self.x, self.y, w, h)
+        self.visible = True
+        self.image = image.load(text)
+        self.image = transform.scale(self.image, (w,h))
+
+    def update(self):
+        if self.visible:
+            win.blit(self.image, self.rect)
 
