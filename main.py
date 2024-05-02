@@ -191,28 +191,28 @@ class Mychik():
 
 #start_screen
 start_menu = Menu(W/2-250,H/2 - 100, "layer.png")
-start_btn = Button(W/2-100,H/2,"start_btn.png", start)#Algerian 200pt
-settings_btn = Button(W/2-100,H/2 + 100 , "settings_btn.png", setting)
+start_btn = Button(W/2-100,H/2,"UI\\buttons\\start_btn.png", start)#Algerian 200pt
+settings_btn = Button(W/2-100,H/2 + 100 , "UI\\buttons\\settings_btn.png", setting)
 
-shop_btn = Button(W/2-100,H/2 + 200 , "shop_btn.png", shop)
+shop_btn = Button(W/2-100,H/2 + 200 , "UI\\buttons\\shop_btn.png", shop)
 
-exit_btn = Button(W/2-100,H/2 + 300,"exit_btn.png", exit)
+exit_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\exit_btn.png", exit)
 
 #setting
 
-back_btn = Button(100,100,"back_btn.png", menu)
+back_btn = Button(100,100,"UI\\buttons\\back_btn.png", menu)
 
     #grafical
-btn2560 = Button(300,200,"2560x1440_btn.png",set_2560)#Algerian 150pt
-btn1920 = Button(300,300,"1920x1080_btn.png",set_1920)
-btn1366 = Button(300,400,"1366x768_btn.png",set_1366)
-btn640 = Button(300,500,"640x480_btn.png", set_640)
-res_list = ListButton(300,100,"resize_btn.png",[btn640, btn1366, btn1920, btn2560])
+btn2560 = Button(300,200,"UI\\buttons\\res\\2560x1440_btn.png",set_2560)#Algerian 150pt
+btn1920 = Button(300,300,"UI\\buttons\\res\\1920x1080_btn.png",set_1920)
+btn1366 = Button(300,400,"UI\\buttons\\res\\1366x768_btn.png",set_1366)
+btn640 = Button(300,500,"UI\\buttons\\res\\640x480_btn.png", set_640)
+res_list = ListButton(300,100,"UI\\buttons\\resize_btn.png",[btn640, btn1366, btn1920, btn2560])
 
     #music
-music_controller = Button(500,200 ,"music_btn.png", music_audio)
-sound_controller = Button(500,300 ,"sound_btn.png", sound_audio)
-audio_list = ListButton(500,100 ,"audio_btn.png",[music_controller, sound_controller])
+music_controller = Button(500,200 ,"UI\\buttons\\music_btn.png", music_audio)
+sound_controller = Button(500,300 ,"UI\\buttons\\sound_btn.png", sound_audio)
+audio_list = ListButton(500,100 ,"UI\\buttons\\audio_btn.png",[music_controller, sound_controller])
 
 
 #game
@@ -223,18 +223,18 @@ platform1 = PlatForm(x=(W-100),y=H/2,width=int(H/20),height=int(W/11),speed=10,p
 platform1.ymove = "-"
 
 
-ball = Mychik(W/2,H/2,int(H/20),int(H/20),10,'beach-ball-icon.png',vfaces[randint(0,1)],hfaces[randint(0,1)])
+ball = Mychik(W/2,H/2,int(H/20),int(H/20),10,'skins\\beach-ball-icon.png',vfaces[randint(0,1)],hfaces[randint(0,1)])
 
 #menu
-resume_btn = Button(W/2-100,H/2,"resume_btn.png", resume)
+resume_btn = Button(W/2-100,H/2,"UI\\buttons\\resume_btn.png", resume)
 
 #shop
 
-back_skin_btn = Button(W/2-200,H/2 + 200,"button.png", back_skin, w  = 100)
-choose_skin = Button(W/2-100,H/2 + 200,"choose_btn.png", choose_skin)
-next_skin_btn = Button(W/2 + 100,H/2 + 200,"button.png", next_skin, w = 100)
+back_skin_btn = Button(W/2-200,H/2 + 200,"UI\\buttons\\button.png", back_skin, w  = 100)
+choose_skin = Button(W/2-100,H/2 + 200,"UI\\buttons\\choose_btn.png", choose_skin)
+next_skin_btn = Button(W/2 + 100,H/2 + 200,"UI\\buttons\\button.png", next_skin, w = 100)
 skin_pic = Picture(W/2-100,H/2, 200, 200, database["skin_list"][0])
-shop_back_btn = Button(W/2-100,H/2 + 300,"back_btn.png", shop_menu)
+shop_back_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\back_btn.png", shop_menu)
 
 #end
 right_lose = Menu(W/2-250,H/2 - 100, "right_lose.png")
@@ -247,9 +247,7 @@ timer = time.Clock()
     
 music.play(-1)
 music.set_volume(0.1)
-while True:
-
-    
+while True:    
     for e in event.get():
         if (e.type == KEYDOWN and e.key == K_ESCAPE) or e.type == QUIT:
             if mode == "menu":

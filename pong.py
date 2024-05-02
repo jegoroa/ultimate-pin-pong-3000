@@ -42,8 +42,6 @@ def set_2560():
     bg = transform.scale(bg , (W, H))
     win = display.set_mode((W,H),flags=FULLSCREEN)
 
-
-
 class Menu():
     def __init__(self,x,y, filename):
         self.image = image.load(filename)
@@ -51,8 +49,6 @@ class Menu():
 
     def update(self):
         win.blit(self.image, self.rect)
-
-
 
 class Button():
     def __init__(self,x,y, text, func, mode = None, w = 200):
@@ -75,8 +71,6 @@ class Button():
     def update(self):
         if self.visible:
             win.blit(self.image, self.rect)
-
-
 
 class ListButton():
     def __init__(self,x,y,text,buttons, visible = False):
@@ -107,7 +101,6 @@ class ListButton():
     def hide_buttons(self):
         for btn in self.buttons:
             btn.visible = False
-
 
 class Picture():
     def __init__(self,x,y, w, h, text):
