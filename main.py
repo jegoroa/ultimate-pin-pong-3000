@@ -24,7 +24,7 @@ in_game = False
 bg = transform.scale(bg , (W, H))
 
 mode = "start_screen"
-
+#пмапсаммамммммс
 def start():
     global mode, in_game
     mode = "game"
