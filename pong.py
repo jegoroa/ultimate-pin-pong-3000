@@ -1,19 +1,7 @@
 from pygame import *
+
 #from win32api import GetSystemMetrics
 
-bg = image.load("background.png")
-
-W = 1920
-H = 1080
-
-coficent = (W*H)/(2560*1440)
-
-win = display.set_mode((W,H),flags=FULLSCREEN)
-
-font.init()
-
-menu_font = font.SysFont("Impact", 42)
-lose_font = font.SysFont("Impact", 50)
 
 def set_640():
     global W,H, bg
@@ -43,15 +31,16 @@ def set_2560():
     win = display.set_mode((W,H),flags=FULLSCREEN)
 
 class Menu():
-    def __init__(self,x,y, filename):
+    def __init__(self,x,y, filename,win):
         self.image = image.load(filename)
         self.rect = Rect(x,y,500,600)
+        self.win = win
 
     def update(self):
-        win.blit(self.image, self.rect)
+        self.win.blit(self.image, self.rect)
 
 class Button():
-    def __init__(self,x,y, text, func, mode = None, w = 200):
+    def __init__(self,x,y, text, func,win, mode = None, w = 200):
         self.x = x
         self.y = y
         self.rect = Rect(self.x,self.y,w,100)
@@ -60,20 +49,22 @@ class Button():
         self.mode = mode
         self.image = image.load(text)
         self.image = transform.scale(self.image, (w,100))
-    
+        self.win=win
+
     def check_click(self,pos):
         if self.rect.collidepoint(pos) and self.visible is True: 
             if self.mode is None:
+                print (self.func)
                 self.func()
             else:
                 self.func(self.mode)
 
     def update(self):
         if self.visible:
-            win.blit(self.image, self.rect)
+            self.win.blit(self.image, self.rect)
 
 class ListButton():
-    def __init__(self,x,y,text,buttons, visible = False):
+    def __init__(self,x,y,text,buttons,win, visible = False):
         self.rect = Rect(x,y,200,100)
         self.image = image.load(text)
         self.image = transform.scale(self.image, (200,100))
@@ -81,6 +72,7 @@ class ListButton():
         self.visible = visible
         for btn in buttons:
             btn.visible = False
+        self.win=win
     
     def check_click(self,pos):
         if self.rect.collidepoint(pos): 
@@ -92,7 +84,7 @@ class ListButton():
                 self.visible = False
 
     def update(self):
-        win.blit(self.image, self.rect)
+        self.win.blit(self.image, self.rect)
 
     def show_buttons(self):
         for btn in self.buttons:
@@ -103,15 +95,16 @@ class ListButton():
             btn.visible = False
 
 class Picture():
-    def __init__(self,x,y, w, h, text):
+    def __init__(self,x,y, w, h, text,win):
         self.x = x
         self.y = y
         self.rect = Rect(self.x, self.y, w, h)
         self.visible = True
         self.image = image.load(text)
         self.image = transform.scale(self.image, (w,h))
+        self.win=win
 
     def update(self):
         if self.visible:
-            win.blit(self.image, self.rect)
+            self.win.blit(self.image, self.rect)
 

@@ -7,6 +7,20 @@ import json
 with open("database.json","r",encoding="utf-8") as file:
     database = json.load(file)
 
+bg = image.load("background.png")
+
+W = 1920
+H = 1080
+
+coficent = (W*H)/(2560*1440)
+
+win = display.set_mode((W,H),flags=FULLSCREEN)
+
+font.init()
+
+menu_font = font.SysFont("Impact", 42)
+lose_font = font.SysFont("Impact", 50)
+
 init()
 
 hit_sound = mixer.Sound('hit_sound.wav')
@@ -40,6 +54,7 @@ def resume():
 
 def menu():
     global mode, first_player, second_player, in_game
+    print('hjghjghjgjgfv')
     if in_game == True:
         mode = "menu"
     else:
@@ -190,29 +205,29 @@ class Mychik():
         self.reset()
 
 #start_screen
-start_menu = Menu(W/2-250,H/2 - 100, "layer.png")
-start_btn = Button(W/2-100,H/2,"UI\\buttons\\start_btn.png", start)#Algerian 200pt
-settings_btn = Button(W/2-100,H/2 + 100 , "UI\\buttons\\settings_btn.png", setting)
+start_menu = Menu(W/2-250,H/2 - 100, "layer.png",win=win)
+start_btn = Button(W/2-100,H/2,"UI\\buttons\\start_btn.png", start,win=win)#Algerian 200pt
+settings_btn = Button(W/2-100,H/2 + 100 , "UI\\buttons\\settings_btn.png", setting,win=win)
 
-shop_btn = Button(W/2-100,H/2 + 200 , "UI\\buttons\\shop_btn.png", shop)
+shop_btn = Button(W/2-100,H/2 + 200 , "UI\\buttons\\shop_btn.png", shop,win=win)
 
-exit_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\exit_btn.png", exit)
+exit_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\exit_btn.png", exit,win=win)
 
 #setting
 
-back_btn = Button(100,100,"UI\\buttons\\back_btn.png", menu)
+back_btn = Button(100,100,"UI\\buttons\\back_btn.png", menu,win=win)
 
     #grafical
-btn2560 = Button(300,200,"UI\\buttons\\res\\2560x1440_btn.png",set_2560)#Algerian 150pt
-btn1920 = Button(300,300,"UI\\buttons\\res\\1920x1080_btn.png",set_1920)
-btn1366 = Button(300,400,"UI\\buttons\\res\\1366x768_btn.png",set_1366)
-btn640 = Button(300,500,"UI\\buttons\\res\\640x480_btn.png", set_640)
-res_list = ListButton(300,100,"UI\\buttons\\resize_btn.png",[btn640, btn1366, btn1920, btn2560])
+btn2560 = Button(300,200,"UI\\buttons\\res\\2560x1440_btn.png",set_2560,win=win)#Algerian 150pt
+btn1920 = Button(300,300,"UI\\buttons\\res\\1920x1080_btn.png",set_1920,win=win)
+btn1366 = Button(300,400,"UI\\buttons\\res\\1366x768_btn.png",set_1366,win=win)
+btn640 = Button(300,500,"UI\\buttons\\res\\640x480_btn.png", set_640,win=win)
+res_list = ListButton(300,100,"UI\\buttons\\resize_btn.png",[btn640, btn1366, btn1920, btn2560],win=win)
 
     #music
-music_controller = Button(500,200 ,"UI\\buttons\\music_btn.png", music_audio)
-sound_controller = Button(500,300 ,"UI\\buttons\\sound_btn.png", sound_audio)
-audio_list = ListButton(500,100 ,"UI\\buttons\\audio_btn.png",[music_controller, sound_controller])
+music_controller = Button(500,200 ,"UI\\buttons\\music_btn.png", music_audio,win=win)
+sound_controller = Button(500,300 ,"UI\\buttons\\sound_btn.png", sound_audio,win=win)
+audio_list = ListButton(500,100 ,"UI\\buttons\\audio_btn.png",[music_controller, sound_controller],win=win)
 
 
 #game
@@ -226,27 +241,27 @@ platform1.ymove = "-"
 ball = Mychik(W/2,H/2,int(H/20),int(H/20),10,'skins\\beach-ball-icon.png',vfaces[randint(0,1)],hfaces[randint(0,1)])
 
 #menu
-resume_btn = Button(W/2-100,H/2,"UI\\buttons\\resume_btn.png", resume)
+resume_btn = Button(W/2-100,H/2,"UI\\buttons\\resume_btn.png", resume,win=win)
 
 #shop
 
-back_skin_btn = Button(W/2-200,H/2 + 200,"UI\\buttons\\button.png", back_skin, w  = 100)
-choose_skin = Button(W/2-100,H/2 + 200,"UI\\buttons\\choose_btn.png", choose_skin)
-next_skin_btn = Button(W/2 + 100,H/2 + 200,"UI\\buttons\\button.png", next_skin, w = 100)
-skin_pic = Picture(W/2-100,H/2, 200, 200, database["skin_list"][0])
-shop_back_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\back_btn.png", shop_menu)
+back_skin_btn = Button(W/2-200,H/2 + 200,"UI\\buttons\\button.png", back_skin, w  = 100,win=win)
+choose_skin_btn = Button(W/2-100,H/2 + 200,"UI\\buttons\\choose_btn.png", choose_skin,win=win)
+next_skin_btn = Button(W/2 + 100,H/2 + 200,"UI\\buttons\\button.png", next_skin, w = 100,win=win)
+skin_pic = Picture(W/2-100,H/2, 200, 200, database["skin_list"][0],win=win)
+shop_back_btn = Button(W/2-100,H/2 + 300,"UI\\buttons\\back_btn.png", shop_menu,win=win)
 
 #end
-right_lose = Menu(W/2-250,H/2 - 100, "right_lose.png")
-left_lose = Menu(W/2-250,H/2 - 100, "left_lose.png")
+right_lose = Menu(W/2-250,H/2 - 100, "right_lose.png",win=win)
+left_lose = Menu(W/2-250,H/2 - 100, "left_lose.png",win=win)
 
 w = W
 h = H
 
 timer = time.Clock()
     
-music.play(-1)
-music.set_volume(0.1)
+#music.play(-1)
+#music.set_volume(0.1)
 while True:    
     for e in event.get():
         if (e.type == KEYDOWN and e.key == K_ESCAPE) or e.type == QUIT:
@@ -276,7 +291,7 @@ while True:
                     btn2560.check_click(e.pos)
             elif mode == "shop":
                 back_skin_btn.check_click(e.pos)
-                choose_skin.check_click(e.pos)
+                choose_skin_btn.check_click(e.pos)
                 next_skin_btn.check_click(e.pos)
                 shop_back_btn.check_click(e.pos)
 
@@ -285,7 +300,7 @@ while True:
                 settings_btn.check_click(e.pos)
                 shop_back_btn.check_click(e.pos)
 
-            elif mode == "end":
+            elif mode == "end_game":
                 back_btn.check_click(e.pos)                
         
         if e.type == KEYDOWN:
@@ -325,7 +340,7 @@ while True:
         win.blit(bg,(0,0))
         start_menu.update()
         back_skin_btn.update()
-        choose_skin.update()
+        choose_skin_btn.update()
         next_skin_btn.update()
         skin_pic.update()
         shop_back_btn.update()
